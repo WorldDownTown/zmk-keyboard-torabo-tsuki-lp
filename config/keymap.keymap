@@ -62,22 +62,27 @@
     };
 };
 
+
 /* ============================================================
  * トラックボール設定
+ *   ノードのラベルは pointing_listener（trackball_listener ではない）
+ *   定義元: boards/shields/torabo_tsuki_lp/torabo_tsuki_lp.dtsi
  *   ここを書き換えたら push → GitHub Actions → uf2 を Central 側に書き込み
  * ============================================================ */
 
-&trackball_listener {
+&pointing_listener {
 
     /* --- 通常時（レイヤー3以外）の処理チェーン ---------------- */
     input-processors =
 
         /* [1] 軸の向き補正
-         *     右手側トラックボール用。これを消すと上下左右が反転する。
-         *     ボールの動きと逆に動く場合はここを調整:
-         *       上下だけ反転  → INPUT_TRANSFORM_Y_INVERT
-         *       左右だけ反転  → INPUT_TRANSFORM_X_INVERT
-         *       縦横が入れ替わる → INPUT_TRANSFORM_XY_SWAP を追加
+         *     torabo_tsuki_lp_right.overlay と同じ内容。
+         *     input-processors は「上書き」なので、ここに書かないと
+         *     overlay 側の設定が消えて上下左右が反転する。
+         *     ボールと逆に動く場合はここを調整:
+         *       上下だけ反転     → INPUT_TRANSFORM_Y_INVERT
+         *       左右だけ反転     → INPUT_TRANSFORM_X_INVERT
+         *       縦横が入れ替わる → INPUT_TRANSFORM_XY_SWAP を | で追加
          */
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
 
@@ -90,31 +95,29 @@
          */
         <&zip_temp_layer 1 750>;
 
-        /* [3] カーソル速度を変えたい場合はここに追加
-         *     <&zip_xy_scaler 倍率 除数>
-         *       速くする: <&zip_xy_scaler 3 2>  (1.5倍)
-         *       遅くする: <&zip_xy_scaler 1 2>  (0.5倍)
-         *     ※ [1] の後、[2] の前に挿入すること
+        /* [3] カーソル速度を変えたい場合は [1] と [2] の間に挿入する
+         *     <&zip_xy_scaler 倍率 除数>,
+         *       速くする: <&zip_xy_scaler 3 2>   (1.5倍)
+         *       遅くする: <&zip_xy_scaler 1 2>   (0.5倍)
          */
 
     /* --- レイヤー3（Enter長押し）中はスクロールになる ---------- */
     scroll_layer {
 
-        /* スクロールにしたいレイヤー番号。
-         * 複数指定も可: layers = <2 3>;
+        /* スクロールにしたいレイヤー番号。複数可: layers = <2 3>;
          * スクロール不要ならこのブロックごと削除してよい */
         layers = <3>;
 
-        /* ⚠ オーバーライドはベースの処理チェーンを「置き換える」ので、
-         *    軸補正 [1] をここにも書かないとスクロール方向が反転する */
+        /* ⚠ レイヤー別オーバーライドはベースの処理チェーンを
+         *    「置き換える」ので、軸補正 [1] をここにも書かないと
+         *    スクロール方向が反転する */
         input-processors =
             <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
 
-            /* スクロール量の調整。ここが最も触る箇所。
+            /* スクロール量の調整。いちばん触る箇所。
              *   速すぎる → <&zip_xy_scaler 1 16>
              *   遅すぎる → <&zip_xy_scaler 1 4>
-             * 逆方向にしたい（ナチュラルスクロール的に）場合は
-             * 上の transform から Y_INVERT を外す/足すで調整 */
+             * ここを入れないと猛烈な速度でスクロールする */
             <&zip_xy_scaler 1 8>,
 
             /* XY移動をホイール入力に変換。これ自体に設定項目はない */
@@ -131,7 +134,7 @@
 
     /* キー入力直後、この時間はAMLを起動しない（誤爆防止）。
      *   タイピング中に手が触れて勝手にマウス層になる → 300〜500 へ増やす
-     *   マウスに切り替えるまでがもたつく           → 100 へ減らす
+     *   マウスに切り替えるまでがもたつく             → 100 へ減らす
      *   0 にすると常に即座に起動する */
     require-prior-idle-ms = <200>;
 
@@ -143,8 +146,10 @@
      *   （1〜2行目が12個、3行目以降が14個ずつ。XSは24〜65が実在）
      *
      *   逆に文字キーはここに入れないこと。
-     *   「文字を打ったら即マウス層から抜ける」のがAMLの利点なので。 */
-    excluded-positions = 
+     *   「文字を打ったら即マウス層から抜ける」のがAMLの利点なので。
+     *
+     *   ⚠ 開き括弧 < を落とすと parse error になる（実際にハマった箇所） */
+    excluded-positions = <
         27 28    // 左手 D / F（レイヤー1の右クリック・左クリック）
         30 31    // 内側キー（レイヤー0から透過してくるクリック）
         33 34 35 // 右手 J / K / L → MB1 / MB2 / MB3
@@ -158,3 +163,4 @@
         64 65    // RCtrl
     >;
 };
+
