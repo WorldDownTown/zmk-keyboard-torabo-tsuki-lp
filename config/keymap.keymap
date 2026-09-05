@@ -112,7 +112,7 @@
          *    「置き換える」ので、軸補正 [1] をここにも書かないと
          *    スクロール方向が反転する */
         input-processors =
-            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+            <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>,
 
             /* スクロール量の調整。いちばん触る箇所。
              *   速すぎる → <&zip_xy_scaler 1 16>
