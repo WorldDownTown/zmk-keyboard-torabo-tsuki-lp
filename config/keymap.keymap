@@ -7,66 +7,67 @@
 #include <dt-bindings/zmk/input_transform.h>
 
 / {
+    chosen {
+        /* このキーマップは S Layout(44キー) の並びで書いてある。
+         * シールド側の既定は L Layout なので、ここで上書きする。
+         * 相互変換は torabo_tsuki_lp_layouts.dtsi の
+         * position_map_1 (complete) が行うため、Studio で
+         * 他のレイアウトを選んでも対応は保たれる。 */
+        zmk,physical-layout = &physical_layout_s;
+    };
 
     /* ============================================================
-     * このキーマップは ZMK Studio 上の実機設定から復元したものです。
+     * ZMK Studio 上の実機設定から復元したキーマップ。
      *
-     * Studio の物理レイアウトは "S Layout"（44キー）ですが、
-     * keymap ファイルは chosen = physical_layout_l に合わせて
-     * L Layout（66キー）の並びで書く必要があります。
-     * そのため XS(=S Layout) に存在しない 22 箇所は &none にしてあります。
+     * 並びは S Layout の物理配置そのまま:
+     *   1行目  0-9    (左5 + 右5)   … 上段
+     *   2行目  10-19  (左5 + 右5)   … ホームロウ(Mod-Tap)
+     *   3行目  20-31  (左6 + 右6)   … 下段
+     *   4行目  32-43  (左6 + 右6)   … 親指段
      *
-     * 行ごとの位置番号（L Layout）:
-     *   1行目(数字段) 0-11   … XSには無いので全て &none
-     *   2行目         12-23
-     *   3行目         24-37
-     *   4行目         38-51
-     *   5行目(親指段) 52-65
+     * XSに存在しないキーは &none。
+     * コンボを書くときの key-positions もこの番号で指定できる。
      * ============================================================ */
     keymap {
         compatible = "zmk,keymap";
 
-        /* Layer 0: base. home-row mods (Mod-Tap) */
+        /* Layer 0: ベース。外側の列と最下段はホームロウモッド(Mod-Tap) */
         layer_0 {
             bindings = <
-&none             &none             &none             &none             &none             &none             &none             &none             &none             &none             &none             &none
-&none             &mt LALT Q        &kp W             &kp E             &kp R             &kp T             &kp Y             &kp U             &kp I             &kp O             &kp P             &none
-&none             &mt LCTRL A       &kp S             &kp D             &kp F             &kp G             &none             &none             &kp H             &kp J             &kp K             &kp L             &mt RCTRL MINUS   &none
-&none             &mt LSHFT Z       &kp X             &kp C             &kp V             &kp B             &none             &none             &kp N             &kp M             &lt 3 COMMA       &kp DOT           &mt RSHFT FSLH    &none
-&none             &kp TAB           &kp LALT          &kp LCTRL         &lt 2 LANGUAGE_1  &lt 3 LANGUAGE_2  &mt RGUI ESC      &kp SPACE         &lt 2 RET         &none             &none             &none             &lt 1 DEL         &none
+&mt LALT Q       &kp W            &kp E            &kp R            &kp T               &kp Y            &kp U            &kp I            &kp O            &kp P
+&mt LCTRL A      &kp S            &kp D            &kp F            &kp G               &kp H            &kp J            &kp K            &kp L            &mt RCTRL MINUS
+&mt LSHFT Z      &kp X            &kp C            &kp V            &kp B            &kp LANGUAGE_2      &kp LANGUAGE_1   &kp N            &kp M            &lt 3 COMMA      &kp DOT          &mt RSHFT FSLH
+&kp TAB          &kp LALT         &kp LCTRL        &mo 2            &mo 3            &mt RGUI ESC        &kp SPACE        &lt 2 RET        &none            &none            &to 1            &kp BSPC
             >;
         };
 
-        /* Layer 1: AML / DEL long-press. F1-F12 + mouse buttons */
+        /* Layer 1: AML / To-Layer で有効化。F1-F12 とマウスボタン MB1-MB5 */
         layer_1 {
             bindings = <
-&none           &none           &none           &none           &none           &none           &none           &none           &none           &none           &none           &none
-&none           &kp F1          &kp F2          &kp F3          &kp F4          &kp F5          &kp F6          &kp F7          &kp F8          &kp F9          &kp F10         &none
-&none           &trans          &trans          &mkp MB2        &mkp MB1        &trans          &none           &none           &trans          &mkp MB1        &mkp MB2        &mkp MB3        &kp F11         &none
-&none           &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &mkp MB4        &trans          &mkp MB5        &kp F12         &none
-&none           &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &none
+&kp F1    &kp F2    &kp F3    &kp F4    &kp F5       &kp F6    &kp F7    &kp F8    &kp F9    &kp F10
+&trans    &trans    &mkp MB2  &mkp MB1  &trans       &trans    &mkp MB1  &mkp MB2  &mkp MB3  &kp F11
+&trans    &trans    &trans    &trans    &trans    &trans       &trans    &trans    &mkp MB4  &trans    &mkp MB5  &kp F12
+&trans    &trans    &trans    &trans    &trans    &trans       &trans    &trans    &trans    &trans    &trans    &trans
             >;
         };
 
-        /* Layer 2: LANG1 long-press. numbers / symbols / arrows */
+        /* Layer 2: &mo 2 で有効化。数字・記号・矢印 */
         layer_2 {
             bindings = <
-&none          &none          &none          &none          &none          &none          &none          &none          &none          &none          &none          &none
-&none          &kp LS(N1)     &kp LS(N2)     &kp LS(N3)     &kp LS(N4)     &kp LS(N5)     &kp LS(N6)     &kp LS(N7)     &kp LS(N8)     &kp LS(N9)     &kp LS(N0)     &none
-&none          &kp N1         &kp N2         &kp N3         &kp N4         &kp N5         &none          &none          &kp LEFT       &kp DOWN       &kp UP         &kp RIGHT      &trans         &none
-&none          &kp N6         &kp N7         &kp N8         &kp N9         &kp N0         &trans         &trans         &trans         &mkp MB1       &mkp MB2       &mkp MB3       &trans         &none
-&none          &trans         &trans         &trans         &trans         &kp LG(SPACE)  &trans         &trans         &trans         &trans         &trans         &trans         &trans         &none
+&kp LS(N1)     &kp LS(N2)     &kp LS(N3)     &kp LS(N4)     &kp LS(N5)        &kp LS(N6)     &kp LS(N7)     &kp LS(N8)     &kp LS(N9)     &kp LS(N0)
+&kp N1         &kp N2         &kp N3         &kp N4         &kp N5            &kp LEFT       &kp DOWN       &kp UP         &kp RIGHT      &trans
+&kp N6         &kp N7         &kp N8         &kp N9         &kp N0         &trans            &trans         &trans         &mkp MB1       &mkp MB2       &mkp MB3       &trans
+&trans         &trans         &trans         &trans         &kp LG(SPACE)  &trans            &trans         &trans         &trans         &trans         &trans         &trans
             >;
         };
 
-        /* Layer 3: LANG2 / COMMA long-press. symbols / brackets / scroll layer */
+        /* Layer 3: &mo 3 / COMMA長押しで有効化。記号・括弧。スクロール層でもある */
         layer_3 {
             bindings = <
-&none          &none          &none          &none          &none          &none          &none          &none          &none          &none          &none          &none
-&none          &kp LS(N1)     &kp LS(N2)     &kp LS(N3)     &kp LS(N4)     &kp LS(N5)     &kp LS(N6)     &kp LS(N7)     &kp LS(N8)     &kp LS(N9)     &kp LS(N0)     &none
-&none          &kp GRAVE      &kp BSLH       &kp SEMI       &kp SQT        &kp EQUAL      &none          &none          &trans         &mkp MB1       &mkp MB2       &kp LBRC       &kp RBRC       &none
-&none          &kp TILDE      &kp PIPE       &kp COLON      &kp DQT        &kp PLUS       &trans         &trans         &trans         &trans         &trans         &kp LBKT       &kp RBKT       &none
-&none          &trans         &trans         &trans         &trans         &trans         &trans         &trans         &kp LG(SPACE)  &trans         &trans         &trans         &trans         &none
+&kp LS(N1)     &kp LS(N2)     &kp LS(N3)     &kp LS(N4)     &kp LS(N5)        &kp LS(N6)     &kp LS(N7)     &kp LS(N8)     &kp LS(N9)     &kp LS(N0)
+&kp GRAVE      &kp BSLH       &kp SEMI       &kp SQT        &kp EQUAL         &trans         &trans         &trans         &kp LBRC       &kp RBRC
+&kp TILDE      &kp PIPE       &kp COLON      &kp DQT        &kp PLUS       &trans            &trans         &trans         &trans         &trans         &kp LBKT       &kp RBKT
+&trans         &trans         &trans         &trans         &trans         &trans            &trans         &kp LG(SPACE)  &trans         &trans         &trans         &trans
             >;
         };
     };
