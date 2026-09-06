@@ -7,15 +7,6 @@
 #include <dt-bindings/zmk/input_transform.h>
 
 / {
-    combos {
-        compatible = "zmk,combos";
-
-        bt_clear {
-            bindings = <&bt BT_CLR>;
-            key-positions = <28 29>;
-            layers = <2>;
-        };
-    };
 
     /* ============================================================
      * このキーマップは ZMK Studio 上の実機設定から復元したものです。
@@ -53,7 +44,7 @@
 &none           &kp F1          &kp F2          &kp F3          &kp F4          &kp F5          &kp F6          &kp F7          &kp F8          &kp F9          &kp F10         &none
 &none           &trans          &trans          &mkp MB2        &mkp MB1        &trans          &none           &none           &trans          &mkp MB1        &mkp MB2        &mkp MB3        &kp F11         &none
 &none           &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &mkp MB4        &trans          &mkp MB5        &kp F12         &none
-&none           &bt BT_CLR_ALL  &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &none
+&none           &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans          &none
             >;
         };
 
