@@ -34,7 +34,7 @@
         /* Layer 0: ベース。外側の列と最下段はホームロウモッド(Mod-Tap) */
         layer_0 {
             bindings = <
-&mt LALT Q       &kp W            &kp E            &kp R            &kp T               &kp Y            &kp U            &kp I            &kp O            &kp P
+&mt LALT Q       &kp W            &kp E            &kp R            &kp T               &kp Y            &kp U            &kp I            &kp O            &lt 4 P
 &mt LCTRL A      &kp S            &kp D            &kp F            &kp G               &kp H            &kp J            &kp K            &kp L            &mt RCTRL MINUS
 &mt LSHFT Z      &kp X            &kp C            &kp V            &kp B            &kp LANGUAGE_2      &kp LANGUAGE_1   &kp N            &kp M            &lt 3 COMMA      &kp DOT          &mt RSHFT FSLH
 &kp TAB          &kp LALT         &kp LCTRL        &mo 2            &mo 3            &mt RGUI ESC        &kp SPACE        &lt 2 RET        &none            &none            &to 1            &kp BSPC
@@ -56,8 +56,8 @@
             bindings = <
 &kp LS(N1)     &kp LS(N2)     &kp LS(N3)     &kp LS(N4)     &kp LS(N5)        &kp LS(N6)     &kp LS(N7)     &kp LS(N8)     &kp LS(N9)     &kp LS(N0)
 &kp N1         &kp N2         &kp N3         &kp N4         &kp N5            &kp LEFT       &kp DOWN       &kp UP         &kp RIGHT      &trans
-&kp N6         &kp N7         &kp N8         &kp N9         &kp N0         &out OUT_USB      &out OUT_BLE   &trans         &mkp MB1       &mkp MB2       &mkp MB3       &trans
-&bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &trans         &kp LG(SPACE)  &trans            &trans         &trans         &trans         &trans         &bt BT_CLR     &trans
+&kp N6         &kp N7         &kp N8         &kp N9         &kp N0         &trans            &trans         &trans         &mkp MB1       &mkp MB2       &mkp MB3       &trans
+&trans         &trans         &trans         &trans         &kp LG(SPACE)  &trans            &trans         &trans         &trans         &trans         &trans         &trans
             >;
         };
 
@@ -68,6 +68,16 @@
 &kp GRAVE      &kp BSLH       &kp SEMI       &kp SQT        &kp EQUAL         &trans         &trans         &trans         &kp LBRC       &kp RBRC
 &kp TILDE      &kp PIPE       &kp COLON      &kp DQT        &kp PLUS       &trans            &trans         &trans         &trans         &trans         &kp LBKT       &kp RBKT
 &trans         &trans         &trans         &trans         &trans         &trans            &trans         &kp LG(SPACE)  &trans         &trans         &trans         &trans
+            >;
+        };
+
+        /* Layer 4: P長押しで有効化。Bluetooth / 出力先の切り替え */
+        layer_4 {
+            bindings = <
+&none         &none         &none         &none         &none            &none         &none         &none         &none         &none
+&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4     &none         &none         &none         &none         &none
+&none         &none         &none         &none         &none         &none            &none         &none         &none         &none         &none         &none
+&bt BT_CLR    &none         &none         &out OUT_USB  &none         &out OUT_BLE     &none         &none         &none         &none         &none         &none
             >;
         };
     };
