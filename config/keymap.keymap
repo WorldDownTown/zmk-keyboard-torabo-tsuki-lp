@@ -107,7 +107,14 @@
          */
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
 
-        /* [2] オートマウスレイヤー（AML）
+        /* [2] カーソル速度の調整
+         *     書式: <&zip_xy_scaler 倍率 除数>
+         *       速くする: <&zip_xy_scaler 3 2>   (1.5倍)
+         *       遅くする: <&zip_xy_scaler 1 2>   (0.5倍)
+         *     現在は 4/5 = 0.8倍。もう少し落とすなら <&zip_xy_scaler 3 4> (0.75倍) */
+        <&zip_xy_scaler 4 5>,
+
+        /* [3] オートマウスレイヤー（AML）
          *     書式: <&zip_temp_layer レイヤー番号 タイムアウトms>
          *       レイヤー番号 … 1 = マウスボタンを置いたレイヤー
          *       タイムアウト … ボールが止まってから解除されるまでの時間
@@ -115,12 +122,6 @@
          *         長すぎ（タイピングに戻れない）   → 500 へ
          */
         <&zip_temp_layer 1 750>;
-
-        /* [3] カーソル速度を変えたい場合は [1] と [2] の間に挿入する
-         *     <&zip_xy_scaler 倍率 除数>,
-         *       速くする: <&zip_xy_scaler 3 2>   (1.5倍)
-         *       遅くする: <&zip_xy_scaler 1 2>   (0.5倍)
-         */
 
     /* --- レイヤー3（Enter長押し）中はスクロールになる ---------- */
     scroll_layer {
