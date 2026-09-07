@@ -34,10 +34,10 @@
         /* Layer 0: ベース。外側の列と最下段はホームロウモッド(Mod-Tap) */
         layer_0 {
             bindings = <
-&mt LALT Q       &kp W            &kp E            &kp R            &kp T               &kp Y            &kp U            &kp I            &kp O            &lt 4 P
+&mt LALT Q       &kp W            &kp E            &kp R            &kp T               &kp Y            &kp U            &kp I            &kp O            &kp P
 &mt LCTRL A      &kp S            &kp D            &kp F            &kp G               &kp H            &kp J            &kp K            &kp L            &mt RCTRL MINUS
-&mt LSHFT Z      &kp X            &kp C            &kp V            &kp B            &kp LANGUAGE_2      &kp LANGUAGE_1   &kp N            &kp M            &lt 3 COMMA      &kp DOT          &mt RSHFT FSLH
-&kp TAB          &kp LALT         &kp LCTRL        &mo 2            &mo 3            &mt RGUI ESC        &kp SPACE        &lt 2 RET        &none            &none            &to 1            &kp BSPC
+&mt LSHFT Z      &kp X            &kp C            &kp V            &kp B            &none               &mo 4            &kp N            &kp M            &lt 3 COMMA      &kp DOT          &mt RSHFT FSLH
+&kp TAB          &kp LALT         &kp LCTRL        &lt 2 LANGUAGE_1 &lt 3 LANGUAGE_2 &mt RGUI ESC        &kp SPACE        &lt 2 RET        &none            &none            &to 1            &kp BSPC
             >;
         };
 
