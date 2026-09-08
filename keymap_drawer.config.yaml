@@ -1,0 +1,10 @@
+# keymap-drawer の設定。.github/workflows/draw.yml から参照する。
+# レイヤー名は parse 時に -l で与える。ここではキーに表示される
+# レイヤー参照 (&mo BT, &lt Sym COMMA など) の表記を揃える。
+parse_config:
+  layer_legend_map:
+    Base: Base
+    Mouse: Mouse
+    Num: Num
+    Sym: Sym
+    BT: BT

@@ -1,0 +1,36 @@
+name: Draw keymap
+
+on:
+  push:
+    paths:
+      - config/keymap.keymap
+      - boards/shields/torabo_tsuki_lp/torabo_tsuki_lp_layouts.dtsi
+      - keymap_drawer.config.yaml
+      - scripts/draw-keymap.sh
+      - .github/workflows/draw.yml
+  workflow_dispatch:
+
+jobs:
+  draw:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install keymap-drawer
+        # 画像を再現可能にするためバージョンを固定する。
+        # 上げるときはローカルで生成し直し、差分を確認してから。
+        run: pip install 'keymap-drawer==0.23.0' 'resvg-py==0.5.0'
+
+      - name: Draw keymap
+        run: ./scripts/draw-keymap.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keymap-image
+          path: |
+            build/keymap/keymap.svg
+            build/keymap/keymap.png
