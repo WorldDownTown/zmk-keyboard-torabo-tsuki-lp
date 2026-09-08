@@ -41,12 +41,16 @@
             >;
         };
 
-        /* Layer 1: AML / To-Layer で有効化。F1-F12 とマウスボタン MB1-MB5 */
+        /* Layer 1: AML(トラックボール操作)で自動的に有効化。マウスボタン MB1-MB5 専用。
+         * このレイヤーはボール停止後 750ms のあいだ勝手に乗るため、
+         * 文字キーの位置には &trans 以外を置かないこと。
+         * (以前ここに F1-F12 を置いていたが、Cmd+F5 で VoiceOver が
+         *  暴発したため Layer 4 へ移設した) */
         layer_1 {
             bindings = <
-&kp F1    &kp F2    &kp F3    &kp F4    &kp F5       &kp F6    &kp F7    &kp F8    &kp F9    &kp F10
-&trans    &trans    &mkp MB2  &mkp MB1  &trans       &trans    &mkp MB1  &mkp MB2  &mkp MB3  &kp F11
-&trans    &trans    &trans    &trans    &trans    &trans       &trans    &trans    &mkp MB4  &trans    &mkp MB5  &kp F12
+&trans    &trans    &trans    &trans    &trans       &trans    &trans    &trans    &trans    &trans
+&trans    &trans    &mkp MB2  &mkp MB1  &trans       &trans    &mkp MB1  &mkp MB2  &mkp MB3  &trans
+&trans    &trans    &trans    &trans    &trans    &trans       &trans    &trans    &mkp MB4  &trans    &mkp MB5  &trans
 &trans    &trans    &trans    &trans    &trans    &trans       &trans    &trans    &trans    &trans    &trans    &trans
             >;
         };
@@ -71,12 +75,13 @@
             >;
         };
 
-        /* Layer 4: P長押しで有効化。Bluetooth / 出力先の切り替え */
+        /* Layer 4: P長押し / &mo 4 で有効化。F1-F12 と Bluetooth / 出力先の切り替え。
+         * 明示的に押している間だけ有効なので、AML のような暴発は起きない */
         layer_4 {
             bindings = <
-&none         &none         &none         &none         &none            &none         &none         &none         &none         &none
-&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4     &none         &none         &none         &none         &none
-&none         &none         &none         &none         &none         &none            &none         &none         &none         &none         &none         &none
+&kp F1        &kp F2        &kp F3        &kp F4        &kp F5           &kp F6        &kp F7        &kp F8        &kp F9        &kp F10
+&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4     &none         &none         &none         &none         &kp F11
+&none         &none         &none         &none         &none         &none            &none         &none         &none         &none         &none         &kp F12
 &bt BT_CLR    &none         &none         &out OUT_USB  &none         &out OUT_BLE     &none         &none         &none         &none         &none         &none
             >;
         };
