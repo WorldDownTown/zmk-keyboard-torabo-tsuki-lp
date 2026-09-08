@@ -75,7 +75,8 @@
             >;
         };
 
-        /* Layer 4: P長押し / &mo 4 で有効化。F1-F12 と Bluetooth / 出力先の切り替え。
+        /* Layer 4: &mo 4(Layer 0 下段、B の右隣)を押している間だけ有効。
+         * F1-F12 と Bluetooth / 出力先の切り替え。
          * 明示的に押している間だけ有効なので、AML のような暴発は起きない */
         layer_4 {
             bindings = <
